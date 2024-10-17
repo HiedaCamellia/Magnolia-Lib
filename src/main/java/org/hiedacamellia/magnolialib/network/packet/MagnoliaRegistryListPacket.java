@@ -7,24 +7,24 @@ import org.hiedacamellia.magnolialib.util.registry.ReloadableRegistry;
 
 import java.util.List;
 
-public abstract class PenguinRegistryListPacket<O extends ReloadableRegistry.PenguinRegistry<O>> implements PenguinPacket {
+public abstract class MagnoliaRegistryListPacket<O extends ReloadableRegistry.PenguinRegistry<O>> implements MagnoliaPacket {
     private final ReloadableRegistry<O> registry;
     private final List<ResourceLocation> registryNames;
 
-    public PenguinRegistryListPacket(ReloadableRegistry<O> registry, List<O> entry) {
+    public MagnoliaRegistryListPacket(ReloadableRegistry<O> registry, List<O> entry) {
         this.registry = registry;
         this.registryNames = entry.stream().map(registry::getID).toList();
     }
 
-    public PenguinRegistryListPacket(ReloadableRegistry<O> registry, FriendlyByteBuf buffer) {
+    public MagnoliaRegistryListPacket(ReloadableRegistry<O> registry, FriendlyByteBuf buffer) {
         this.registry = registry;
         this.registryNames = buffer.readList(FriendlyByteBuf::readResourceLocation);
     }
 
-    @Override
-    public void write(FriendlyByteBuf pBuffer) {
-        pBuffer.writeCollection(registryNames, FriendlyByteBuf::writeResourceLocation);
-    }
+//    @Override
+//    public void write(FriendlyByteBuf pBuffer) {
+//        pBuffer.writeCollection(registryNames, FriendlyByteBuf::writeResourceLocation);
+//    }
 
     @Override
     public void handle(Player player) {

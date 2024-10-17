@@ -2,6 +2,7 @@ package org.hiedacamellia.magnolialib.network.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.PacketFlow;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.NeoForge;
@@ -18,15 +19,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Packet(value = PacketFlow.CLIENTBOUND)
-public class SyncDatabasePacket implements PenguinPacket {
-    public static final ResourceLocation ID = MagnoliaLib.prefix("database_sync");
+public class SyncDatabasePacket implements MagnoliaPacket {
     private final Database database;
     private final Map<String, Table> tables = new HashMap<>();
 
-    @Override
-    public @NotNull ResourceLocation id() {
-        return ID;
-    }
+    public static final Type<SyncDatabasePacket> TYPE = new Type<>(MagnoliaLib.prefix("database_sync"));
 
     public SyncDatabasePacket(Database database) {
         this.database = database;
@@ -45,7 +42,7 @@ public class SyncDatabasePacket implements PenguinPacket {
         }
     }
 
-    @Override
+//    @Override
     public void write(FriendlyByteBuf buf) {
         int tableCount = database.tableData.size();
         buf.writeShort(tableCount);
@@ -65,5 +62,10 @@ public class SyncDatabasePacket implements PenguinPacket {
             Database.print(tables);
         NeoForge.EVENT_BUS.post(new DatabasePopulateEvent(tables));
         NeoForge.EVENT_BUS.post(new DatabaseLoadedEvent(tables));
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

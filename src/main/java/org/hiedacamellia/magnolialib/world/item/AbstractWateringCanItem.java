@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
-import org.hiedacamellia.magnolialib.event.PenguinEventHooks;
+import org.hiedacamellia.magnolialib.event.MagnoliaEventHooks;
 import org.hiedacamellia.magnolialib.event.UseWateringCanEvent;
 import org.hiedacamellia.magnolialib.util.helper.FluidHelper;
 
@@ -73,7 +73,7 @@ public abstract class AbstractWateringCanItem extends Item {
     }
 
     public boolean water(Player player, Level level, BlockPos pos, ItemStack stack, InteractionHand hand) {
-        return PenguinEventHooks.useWateringCan(player, level, pos, stack);
+        return MagnoliaEventHooks.useWateringCan(player, level, pos, stack);
     }
 
     @Nonnull

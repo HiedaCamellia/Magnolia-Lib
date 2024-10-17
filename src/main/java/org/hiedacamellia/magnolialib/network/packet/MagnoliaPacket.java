@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.hiedacamellia.magnolialib.util.helper.PlayerHelper;
 
-public interface PenguinPacket extends CustomPacketPayload {
+public interface MagnoliaPacket extends CustomPacketPayload {
     default void handleClient() {
         handle(PlayerHelper.getClient());
     }

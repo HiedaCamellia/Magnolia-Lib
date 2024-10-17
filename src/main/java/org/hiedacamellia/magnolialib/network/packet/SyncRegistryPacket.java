@@ -12,7 +12,7 @@ import org.hiedacamellia.magnolialib.util.registry.ReloadableRegistry;
 import java.util.Map;
 
 @Packet(PacketFlow.CLIENTBOUND)
-public class SyncRegistryPacket implements PenguinPacket {
+public class SyncRegistryPacket implements MagnoliaPacket {
     public static final ResourceLocation ID = MagnoliaLib.prefix("sync_penguin_registries");
     private final ReloadableRegistry<?> registry;
     private final Map<ResourceLocation, ? extends ReloadableRegistry.PenguinRegistry<?>> entries;

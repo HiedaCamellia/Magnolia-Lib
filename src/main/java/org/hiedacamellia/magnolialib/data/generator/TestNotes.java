@@ -1,5 +1,6 @@
 package org.hiedacamellia.magnolialib.data.generator;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import org.hiedacamellia.magnolialib.world.note.Category;
@@ -8,8 +9,8 @@ import org.hiedacamellia.magnolialib.world.note.Note;
 import java.util.Map;
 
 public class TestNotes extends AbstractNoteProvider {
-    public TestNotes(PackOutput output) {
-        super(output);
+    public TestNotes(PackOutput output, HolderLookup.Provider holderLookupProvider) {
+        super(output,holderLookupProvider);
     }
 
     @Override

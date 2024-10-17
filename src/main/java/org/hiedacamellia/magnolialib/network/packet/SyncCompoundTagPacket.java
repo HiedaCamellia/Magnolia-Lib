@@ -3,7 +3,7 @@ package org.hiedacamellia.magnolialib.network.packet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 
-public abstract class SyncCompoundTagPacket implements PenguinPacket {
+public abstract class SyncCompoundTagPacket implements MagnoliaPacket {
     public CompoundTag tag;
 
     public SyncCompoundTagPacket(CompoundTag tag) {
@@ -13,9 +13,9 @@ public abstract class SyncCompoundTagPacket implements PenguinPacket {
     public SyncCompoundTagPacket(final FriendlyByteBuf buf) {
         this.tag = buf.readNbt();
     }
-
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeNbt(tag);
-    }
+//
+//    @Override
+//    public void write(FriendlyByteBuf buf) {
+//        buf.writeNbt(tag);
+//    }
 }

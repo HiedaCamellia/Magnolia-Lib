@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
-import org.hiedacamellia.magnolialib.network.packet.PenguinPacket;
+import org.hiedacamellia.magnolialib.network.packet.MagnoliaPacket;
 import org.hiedacamellia.magnolialib.util.registry.ReloadableRegistry;
 import org.hiedacamellia.magnolialib.world.team.MagnoliaTeam;
 import org.hiedacamellia.magnolialib.world.team.MagnoliaTeams;
@@ -16,13 +16,13 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class PenguinNetwork {
-    public static void sendToClient(@Nullable ServerPlayer player, PenguinPacket... packets) {
+    public static void sendToClient(@Nullable ServerPlayer player, MagnoliaPacket... packets) {
         if (player != null) {
             PacketDistributor.PLAYER.with(player).send(packets);
         }
     }
 
-    public static void sendToTeam(ServerLevel world, UUID uuid, PenguinPacket... packets) {
+    public static void sendToTeam(ServerLevel world, UUID uuid, MagnoliaPacket... packets) {
         MagnoliaTeam team = MagnoliaTeams.getTeamFromID(world, uuid);
         if (team != null) {
             team.members().stream()
@@ -33,31 +33,31 @@ public class PenguinNetwork {
         }
     }
 
-    public static void sendToServer(PenguinPacket packet) {
+    public static void sendToServer(MagnoliaPacket packet) {
         PacketDistributor.SERVER.noArg().send(packet);
     }
 
-    public static void sendToEveryone(PenguinPacket packet) {
+    public static void sendToEveryone(MagnoliaPacket packet) {
         PacketDistributor.ALL.noArg().send(packet);
     }
 
-    public static void sendToDimension(ServerLevel world, PenguinPacket... packets) {
+    public static void sendToDimension(ServerLevel world, MagnoliaPacket... packets) {
         PacketDistributor.DIMENSION.with(world.dimension()).send(packets);
     }
 
-    public static void sendToNearby(ServerLevel world, double x, double y, double z, double distance, PenguinPacket... packets) {
+    public static void sendToNearby(ServerLevel world, double x, double y, double z, double distance, MagnoliaPacket... packets) {
         PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(x, y, z, distance, world.dimension())).send(packets);
     }
 
-    public static void sendToNearby(BlockEntity entity, PenguinPacket... packets) {
+    public static void sendToNearby(BlockEntity entity, MagnoliaPacket... packets) {
         sendToNearby((ServerLevel) entity.getLevel(), entity.getBlockPos().getX(), entity.getBlockPos().getY(), entity.getBlockPos().getZ(), 64D, packets);
     }
 
-    public static void sendToNearby(Entity entity, PenguinPacket... packets) {
+    public static void sendToNearby(Entity entity, MagnoliaPacket... packets) {
         sendToNearby((ServerLevel) entity.level(), entity.getX(), entity.getY(), entity.getZ(), 64D, packets);
     }
 
-    public static <P extends PenguinPacket> void handlePacket(P packet, PlayPayloadContext context) {
+    public static <P extends MagnoliaPacket> void handlePacket(P packet, PlayPayloadContext context) {
         context.player().ifPresent(player -> {
             if (player instanceof ServerPlayer spl)
                 context.workHandler().submitAsync(() -> packet.handleServer(spl));

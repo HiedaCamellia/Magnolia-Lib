@@ -9,7 +9,7 @@ import org.hiedacamellia.magnolialib.MagnoliaLib;
 import org.hiedacamellia.magnolialib.util.registry.Packet;
 
 @Packet(value = PacketFlow.CLIENTBOUND)
-public class TemplatePacket implements PenguinPacket {
+public class TemplatePacket implements MagnoliaPacket {
     public static final ResourceLocation ID = MagnoliaLib.prefix("template_packet");
     @Override
     public @NotNull ResourceLocation id() {

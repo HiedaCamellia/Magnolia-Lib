@@ -1,8 +1,13 @@
 package org.hiedacamellia.magnolialib.network.packet;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -14,23 +19,16 @@ import org.hiedacamellia.magnolialib.world.block.entity.inventory.InventoryBlock
 import javax.annotation.Nonnull;
 
 @Packet(PacketFlow.CLIENTBOUND)
-public record SetInventorySlotPacket(BlockPos pos, int slot, ItemStack stack) implements PenguinPacket {
-    public static final ResourceLocation ID = MagnoliaLib.prefix("set_inventory_slot");
-    @Override
-    public @Nonnull ResourceLocation id() {
-        return ID;
-    }
+public record SetInventorySlotPacket(BlockPos pos, int slot, ItemStack stack) implements MagnoliaPacket {
 
-    public SetInventorySlotPacket(FriendlyByteBuf from) {
-        this(BlockPos.of(from.readLong()), from.readInt(), from.readItem());
-    }
+    public static final Type<SetInventorySlotPacket> TYPE = new Type<>(MagnoliaLib.prefix("set_inventory_slot"));
 
-    @Override
-    public void write(FriendlyByteBuf to) {
-        to.writeLong(pos.asLong());
-        to.writeInt(slot);
-        to.writeItem(stack);
-    }
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetInventorySlotPacket> STREAM_CODEC = StreamCodec.composite(
+            BlockPos.STREAM_CODEC, SetInventorySlotPacket::pos,
+            ByteBufCodecs.INT, SetInventorySlotPacket::slot,
+            ItemStack.STREAM_CODEC, SetInventorySlotPacket::stack,
+            SetInventorySlotPacket::new);
 
     @Override
     public void handle(Player player) {
@@ -38,5 +36,10 @@ public record SetInventorySlotPacket(BlockPos pos, int slot, ItemStack stack) im
         if (tile instanceof InventoryBlockEntity te) {
             te.setItem(slot, stack);
         }
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

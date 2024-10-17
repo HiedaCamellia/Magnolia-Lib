@@ -42,7 +42,7 @@ public class ScriptingEvents {
         public <E extends Enum<E>> void registerEnum(Class<E> e) {
             Sandbox.allow(e.getName());
             for (E v: e.getEnumConstants()) {
-                Object wrappedJavaClass = Context.javaToJS(context, v, globalScope);
+                Object wrappedJavaClass = context.javaToJS(v, globalScope);
                 ScriptableObject.putProperty(globalScope, v.name().toLowerCase(Locale.ENGLISH), wrappedJavaClass, context);
                 //context.addToScope(globalScope, v.name().toLowerCase(Locale.ENGLISH), v);
             }
@@ -50,13 +50,13 @@ public class ScriptingEvents {
 
         public void registerVar(String var, Class<?> clazz) {
             Sandbox.allow(clazz.getName());
-            Object wrappedJavaClass = Context.javaToJS(context, clazz, globalScope);
+            Object wrappedJavaClass = context.javaToJS(clazz, globalScope);
             ScriptableObject.putProperty(globalScope, var, wrappedJavaClass, context);
         }
 
         public void registerVar(String var, Object obj) {
             Sandbox.allow(obj.getClass().getName());
-            Object wrappedJavaClass = Context.javaToJS(context, obj, globalScope);
+            Object wrappedJavaClass = context.javaToJS(obj, globalScope);
             ScriptableObject.putProperty(globalScope, var, wrappedJavaClass, context);
         }
 

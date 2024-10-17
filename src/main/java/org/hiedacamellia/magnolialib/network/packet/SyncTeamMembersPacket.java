@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.stream.IntStream;
 
 @Packet(PacketFlow.CLIENTBOUND)
-public class SyncTeamMembersPacket implements PenguinPacket {
+public class SyncTeamMembersPacket implements MagnoliaPacket {
     public static final ResourceLocation ID = MagnoliaLib.prefix("sync_team_members");
     public final Map<UUID, UUID> memberOf;
 

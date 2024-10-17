@@ -38,8 +38,8 @@ public class Note implements ReloadableRegistry.PenguinRegistry<Note> {
                             }
                     ));
 
-    public static final SpriteIcon NOTE_STANDARD = new SpriteIcon(new ResourceLocation(MagnoliaLib.MODID, "note_standard"));
-    public static final SpriteIcon NOTE_HIDDEN = new SpriteIcon(new ResourceLocation(MagnoliaLib.MODID, "note_hidden"));
+    public static final SpriteIcon NOTE_STANDARD = new SpriteIcon( MagnoliaLib.prefix( "note_standard"));
+    public static final SpriteIcon NOTE_HIDDEN = new SpriteIcon(MagnoliaLib.prefix( "note_hidden"));
     private final ResourceLocation category;
     private final NoteType type;
     private Icon icon;

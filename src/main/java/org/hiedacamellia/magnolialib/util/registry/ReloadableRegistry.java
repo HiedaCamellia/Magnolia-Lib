@@ -12,9 +12,10 @@ import net.minecraft.server.network.ConfigurationTask;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.network.configuration.ICustomConfigurationTask;
-import net.neoforged.neoforge.network.event.OnGameConfigurationEvent;
+import net.neoforged.neoforge.network.event.RegisterConfigurationTasksEvent;
 import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
 import org.hiedacamellia.magnolialib.network.packet.SyncRegistryPacket;
@@ -118,7 +119,7 @@ public class ReloadableRegistry<O extends ReloadableRegistry.PenguinRegistry<O>>
     @EventBusSubscriber(modid = MagnoliaLib.MODID, bus = EventBusSubscriber.Bus.MOD)
     public static class Sync {
         @SubscribeEvent
-        public static void onDataPack(OnGameConfigurationEvent event) {
+        public static void onDataPack(RegisterConfigurationTasksEvent event) {
             event.register(new Configure(event.getListener()));
         }
     }

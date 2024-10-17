@@ -1,10 +1,12 @@
 package org.hiedacamellia.magnolialib.network.packet;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
 import org.hiedacamellia.magnolialib.client.MagnoliaTeamsClient;
 import org.hiedacamellia.magnolialib.util.registry.Packet;
@@ -12,36 +14,28 @@ import org.hiedacamellia.magnolialib.util.registry.Packet;
 import java.util.UUID;
 
 @Packet(value = PacketFlow.CLIENTBOUND)
-public class ChangeTeamPacket implements PenguinPacket {
-    public static final ResourceLocation ID = MagnoliaLib.prefix("change_team");
-    private final UUID player;
-    private final UUID oldTeam;
-    private final UUID newTeam;
+public record ChangeTeamPacket(UUID player, UUID oldTeam, UUID newTeam) implements MagnoliaPacket {
 
-    public ChangeTeamPacket(UUID player, UUID oldTeam, UUID newTeam) {
-        this.player = player;
-        this.oldTeam = oldTeam;
-        this.newTeam = newTeam;
-    }
+    public static final Type<ChangeTeamPacket> TYPE = new Type<>(MagnoliaLib.prefix("change_team"));
 
     public ChangeTeamPacket(FriendlyByteBuf buf) {
         this(buf.readUUID(), buf.readUUID(), buf.readUUID());
     }
 
-    @Override
-    public void write(FriendlyByteBuf to) {
-        to.writeUUID(player);
-        to.writeUUID(oldTeam);
-        to.writeUUID(newTeam);
-    }
+    public static final StreamCodec<ByteBuf, ChangeTeamPacket> STREAM_CODEC = StreamCodec.composite(
+            UUIDUtil.STREAM_CODEC, ChangeTeamPacket::player,
+            UUIDUtil.STREAM_CODEC, ChangeTeamPacket::oldTeam,
+            UUIDUtil.STREAM_CODEC, ChangeTeamPacket::newTeam,
+            ChangeTeamPacket::new);
 
-    @Override
-    public @NotNull ResourceLocation id() {
-        return ID;
-    }
 
     @Override
     public void handle(Player clientPlayer) {
         MagnoliaTeamsClient.changeTeam(player, oldTeam, newTeam);
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

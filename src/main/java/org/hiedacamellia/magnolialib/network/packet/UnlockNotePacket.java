@@ -12,7 +12,7 @@ import org.hiedacamellia.magnolialib.util.registry.Packet;
 import org.hiedacamellia.magnolialib.world.note.Note;
 
 @Packet(value = PacketFlow.CLIENTBOUND)
-public record UnlockNotePacket(Note note) implements PenguinPacket {
+public record UnlockNotePacket(Note note) implements MagnoliaPacket {
     public static final ResourceLocation ID = MagnoliaLib.prefix("unlock_note");
     @Override
     public @NotNull ResourceLocation id() {

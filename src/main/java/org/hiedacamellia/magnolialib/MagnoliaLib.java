@@ -34,7 +34,7 @@ import org.hiedacamellia.magnolialib.client.MagnoliaClientConfig;
 import org.hiedacamellia.magnolialib.data.PenguinRegistries;
 import org.hiedacamellia.magnolialib.data.generator.*;
 import org.hiedacamellia.magnolialib.network.PenguinNetwork;
-import org.hiedacamellia.magnolialib.network.packet.PenguinPacket;
+import org.hiedacamellia.magnolialib.network.packet.MagnoliaPacket;
 import org.hiedacamellia.magnolialib.util.IModPlugin;
 import org.hiedacamellia.magnolialib.util.registry.Packet;
 import org.hiedacamellia.magnolialib.util.registry.Plugin;
@@ -98,7 +98,7 @@ public class MagnoliaLib {
                 Optional.of(new InclusiveRange<>(0, Integer.MAX_VALUE)))));
     }
 
-    private static List<Pair<Class<PenguinPacket>, PacketFlow>> PACKETS = Lists.newArrayList();
+    private static List<Pair<Class<MagnoliaPacket>, PacketFlow>> PACKETS = Lists.newArrayList();
 
     @SubscribeEvent
     public static void registerPackets(final RegisterPayloadHandlersEvent event) {
@@ -107,7 +107,7 @@ public class MagnoliaLib {
         PACKETS.forEach(pair -> {
             ResourceLocation ID = ObfuscationReflectionHelper.getPrivateValue(pair.getLeft(), null, "ID");
             if (ID == null) throw new RuntimeException("Packet " + pair.getLeft().getName() + " has no ID");
-            FriendlyByteBuf.Reader<PenguinPacket> reader = (buf) -> {
+            FriendlyByteBuf.Reader<MagnoliaPacket> reader = (buf) -> {
                 try {
                     return pair.getLeft().getDeclaredConstructor(FriendlyByteBuf.class).newInstance(buf);
                 } catch (Exception e) {
@@ -152,7 +152,7 @@ public class MagnoliaLib {
                 .forEach((a -> {
                     try {
                         Class<?> clazz = Class.forName(a.clazz().getClassName());
-                        PACKETS.add(Pair.of((Class<PenguinPacket>) clazz, PacketFlow.valueOf(((ModAnnotation.EnumHolder) a.annotationData().get("value")).value())));
+                        PACKETS.add(Pair.of((Class<MagnoliaPacket>) clazz, PacketFlow.valueOf(((ModAnnotation.EnumHolder) a.annotationData().get("value")).value())));
                     } catch (ClassNotFoundException ignored) {}
                 }));
     }

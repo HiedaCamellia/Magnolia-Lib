@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import javax.annotation.Nonnull;
 
 
-@Event.HasResult
+//@Event
 public class UseWateringCanEvent extends PlayerEvent implements ICancellableEvent {
     private final ItemStack current;
     private final Level level;

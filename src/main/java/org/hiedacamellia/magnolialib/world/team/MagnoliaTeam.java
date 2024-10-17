@@ -9,10 +9,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.event.TeamChangedOwnerEvent;
 import org.hiedacamellia.magnolialib.network.PenguinNetwork;
-import org.hiedacamellia.magnolialib.network.packet.PenguinPacket;
+import org.hiedacamellia.magnolialib.network.packet.MagnoliaPacket;
 import org.hiedacamellia.magnolialib.network.packet.SyncTeamDataPacket;
 import org.hiedacamellia.magnolialib.network.packet.SyncTeamSubTagPacket;
 import org.jetbrains.annotations.UnknownNullability;
@@ -90,7 +89,7 @@ public class MagnoliaTeam implements INBTSerializable<CompoundTag> {
         return data;
     }
 
-    public PenguinPacket getSyncPacket() {
+    public MagnoliaPacket getSyncPacket() {
         return new SyncTeamDataPacket(serializeNBT(null));
     }
 
