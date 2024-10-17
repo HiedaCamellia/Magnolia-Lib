@@ -3,6 +3,7 @@ package org.hiedacamellia.magnolialib.network.packet;
 import com.google.common.collect.Maps;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.PacketFlow;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
@@ -15,13 +16,9 @@ import java.util.stream.IntStream;
 
 @Packet(PacketFlow.CLIENTBOUND)
 public class SyncTeamMembersPacket implements MagnoliaPacket {
-    public static final ResourceLocation ID = MagnoliaLib.prefix("sync_team_members");
     public final Map<UUID, UUID> memberOf;
 
-    @Override
-    public @NotNull ResourceLocation id() {
-        return ID;
-    }
+    public static final Type<SyncTeamMembersPacket> TYPE = new Type<>(MagnoliaLib.prefix("sync_team_members"));
 
     public SyncTeamMembersPacket(Map<UUID, UUID> memberOf) {
         this.memberOf = memberOf;
@@ -34,17 +31,22 @@ public class SyncTeamMembersPacket implements MagnoliaPacket {
                 memberOf.put(from.readUUID(), from.readUUID()));
     }
 
-    @Override
-    public void write(FriendlyByteBuf to) {
-        to.writeByte(memberOf.size());
-        memberOf.forEach((key, value) -> {
-            to.writeUUID(key);
-            to.writeUUID(value);
-        });
-    }
+//    @Override
+//    public void write(FriendlyByteBuf to) {
+//        to.writeByte(memberOf.size());
+//        memberOf.forEach((key, value) -> {
+//            to.writeUUID(key);
+//            to.writeUUID(value);
+//        });
+//    }
 
     @Override
     public void handleClient() {
         MagnoliaTeamsClient.setMembers(memberOf);
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }
