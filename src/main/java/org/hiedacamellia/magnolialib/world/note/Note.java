@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
 import org.hiedacamellia.magnolialib.data.PenguinRegistries;
-import org.hiedacamellia.magnolialib.network.PenguinNetwork;
+import org.hiedacamellia.magnolialib.network.MagnoliaNetwork;
 import org.hiedacamellia.magnolialib.network.packet.ReadNotePacket;
 import org.hiedacamellia.magnolialib.network.packet.UnlockNotePacket;
 import org.hiedacamellia.magnolialib.util.helper.PlayerHelper;
@@ -92,7 +92,7 @@ public class Note implements ReloadableRegistry.PenguinRegistry<Note> {
     public void unlock(Player player) {
         PlayerHelper.setSubTag(player, "Notes", "Unlocked", id().toString());
         if (player instanceof ServerPlayer sp)
-            PenguinNetwork.sendToClient(sp, new UnlockNotePacket(this));
+            MagnoliaNetwork.sendToClient(sp, new UnlockNotePacket(this));
     }
 
     public boolean isRead(Player player) {
@@ -102,7 +102,7 @@ public class Note implements ReloadableRegistry.PenguinRegistry<Note> {
     public void read(Player player) {
         PlayerHelper.setSubTag(player, "Notes", "Read", id().toString());
         if (player instanceof ServerPlayer sp)
-            PenguinNetwork.sendToClient(sp, new ReadNotePacket(this));
+            MagnoliaNetwork.sendToClient(sp, new ReadNotePacket(this));
     }
 
     public Icon getIcon() {

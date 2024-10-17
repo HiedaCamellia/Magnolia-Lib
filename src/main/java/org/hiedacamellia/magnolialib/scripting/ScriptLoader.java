@@ -75,7 +75,7 @@ public class ScriptLoader extends SimplePreparableReloadListener<Map<ResourceLoc
             String valueInsideQuotes = match.replaceAll("\\brequire\\(['\"](.*)['\"]\\);?", "$1");
             String namespace = valueInsideQuotes.split(":")[0];
             String path = MagnoliaLib.MODID + "/" + valueInsideQuotes.split(":")[1];
-            ResourceLocation location = new ResourceLocation(namespace, path + (path.contains(".js") ? Strings.EMPTY : ".js"));
+            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(namespace, path + (path.contains(".js") ? Strings.EMPTY : ".js"));
             Optional<Resource> resource = manager.getResource(location);
             if (resource.isPresent()) {
                 try (Reader reader = resource.get().openAsReader()) {

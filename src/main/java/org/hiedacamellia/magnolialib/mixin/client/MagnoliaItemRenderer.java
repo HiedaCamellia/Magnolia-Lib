@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.hiedacamellia.magnolialib.client.renderer.ShadowRenderer;
 
 @Mixin(ItemRenderer.class)
-public class PenguinItemRenderer {
+public class MagnoliaItemRenderer {
     @Inject(method = "getFoilBuffer", at = @At("HEAD"), cancellable = true)
     private static void getShadowBuffer(MultiBufferSource buffer, RenderType type, boolean isItem, boolean isShiny, CallbackInfoReturnable<VertexConsumer> cir) {
         if (ShadowRenderer.isEnabled())

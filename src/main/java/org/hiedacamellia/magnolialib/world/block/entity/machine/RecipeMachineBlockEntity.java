@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.hiedacamellia.magnolialib.network.PenguinNetwork;
+import org.hiedacamellia.magnolialib.network.MagnoliaNetwork;
 import org.hiedacamellia.magnolialib.network.packet.SetInventorySlotPacket;
 
 import javax.annotation.Nonnull;
@@ -66,7 +66,7 @@ public abstract class RecipeMachineBlockEntity<I extends Recipe<Container>> exte
     public void finishMachine() {
         ItemStack result = Objects.requireNonNull(getRecipeResult(items.get(0))).assemble(this, level.registryAccess());
         items.set(0, result); //Hell yeah!
-        PenguinNetwork.sendToNearby(this, new SetInventorySlotPacket(worldPosition, 0, result));
+        MagnoliaNetwork.sendToNearby(this, new SetInventorySlotPacket(worldPosition, 0, result));
         setChanged();
     }
 

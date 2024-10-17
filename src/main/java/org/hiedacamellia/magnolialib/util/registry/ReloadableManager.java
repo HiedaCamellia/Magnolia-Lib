@@ -11,6 +11,7 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +51,7 @@ public class ReloadableManager extends SimplePreparableReloadListener<Map<String
                 try {
                     DataResult<? extends ReloadableRegistry.PenguinRegistry<?>> result = registry.codec().parse(JsonOps.INSTANCE, element);
                     if (result != null && result.result().isPresent())
-                        entries.put(rl, result.get().orThrow().init(resourceManager, rl));
+                        entries.put(rl, result.getOrThrow().init(resourceManager, rl));
                 } catch (Exception exception) {
                     MagnoliaLib.LOGGER.error("Parsing error loading {} {}: {}", registry.dir(), rl, exception.getMessage());
                     exception.printStackTrace();

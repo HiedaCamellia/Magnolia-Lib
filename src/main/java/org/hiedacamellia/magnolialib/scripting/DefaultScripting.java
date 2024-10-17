@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import dev.latvian.mods.rhino.Context;
 import dev.latvian.mods.rhino.util.HideFromJS;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
@@ -110,7 +112,7 @@ public class DefaultScripting {
 
         public ItemStackJS createUnbreakableItemStack(String name) {
             ItemStack stack = createItemStack(name).get();
-            stack.getOrCreateTag().putBoolean("Unbreakable", true);
+            stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe().putBoolean("Unbreakable", true);
             return WrapperRegistry.wrap(stack);
         }
 
@@ -119,7 +121,7 @@ public class DefaultScripting {
         }
 
         public ItemStackJS createItemStack(String name, int amount) {
-            return WrapperRegistry.wrap(new ItemStack(BuiltInRegistries.ITEM.get(new ResourceLocation(name)), amount));
+            return WrapperRegistry.wrap(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse(name)), amount));
         }
 
         //TODO???
@@ -128,7 +130,7 @@ public class DefaultScripting {
 //    }
 
         public boolean isTrue(String script, String function, Object... vars) {
-            return ScriptFactory.getResult(new ResourceLocation(script), function, false, vars);
+            return ScriptFactory.getResult(ResourceLocation.parse(script), function, false, vars);
         }
 
         public PlayerJS getFakePlayer(ServerLevelJS world, PositionJS pos) {
@@ -136,7 +138,7 @@ public class DefaultScripting {
         }
 
         public void call(String script, String function, Object... vars) {
-            ScriptFactory.callFunction(new ResourceLocation(function), function, vars);
+            ScriptFactory.callFunction(ResourceLocation.parse(function), function, vars);
         }
     }
 }

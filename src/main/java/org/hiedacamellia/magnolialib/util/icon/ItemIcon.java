@@ -25,13 +25,13 @@ public class ItemIcon extends Icon {
     private int count;
 
     public ItemIcon(ItemStack stack) {
-        super(Type.ITEM, stack.getCount());
+        super(Type.TEXTURE, stack.getCount());
         this.stack = stack;
         this.count = stack.getCount();
     }
-    public ItemIcon(FriendlyByteBuf buf) {
-        this(buf.readItem());
-    }
+//    public ItemIcon(FriendlyByteBuf buf) {
+//        this(buf.readItem());
+//    }
 
     @Override
     public Codec<? extends Icon> codec() {
@@ -40,7 +40,7 @@ public class ItemIcon extends Icon {
 
     @Override
     public void toNetwork(FriendlyByteBuf pb) {
-        pb.writeItem(stack);
+//        pb.writeItem(stack);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -65,6 +65,6 @@ public class ItemIcon extends Icon {
 
     @Override
     public List<Component> getTooltipLines(Player player) {
-        return stack.getTooltipLines(player, TooltipFlag.NORMAL);
+        return stack.getTooltipLines(null,player, TooltipFlag.NORMAL);
     }
 }

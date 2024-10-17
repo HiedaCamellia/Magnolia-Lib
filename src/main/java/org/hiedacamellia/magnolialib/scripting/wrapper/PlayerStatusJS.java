@@ -3,7 +3,7 @@ package org.hiedacamellia.magnolialib.scripting.wrapper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import org.hiedacamellia.magnolialib.network.PenguinNetwork;
+import org.hiedacamellia.magnolialib.network.MagnoliaNetwork;
 import org.hiedacamellia.magnolialib.network.packet.SyncPlayerTagPacket;
 import org.hiedacamellia.magnolialib.util.helper.PlayerHelper;
 
@@ -23,7 +23,7 @@ public class PlayerStatusJS extends AbstractJS<PlayerJS> {
         if (value == 0) tag.remove(status);
         else tag.putInt(status, value);
         if (player instanceof ServerPlayer sp) {
-            PenguinNetwork.sendToClient(sp, new SyncPlayerTagPacket("PenguinStatuses", player));
+            MagnoliaNetwork.sendToClient(sp, new SyncPlayerTagPacket("PenguinStatuses", player));
         }
     }
 

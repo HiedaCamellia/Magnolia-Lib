@@ -40,14 +40,16 @@ public class EntityIcon extends Icon {
     private int count;
 
     public EntityIcon(Holder<EntityType<?>> entityType, int count, int scale) {
-        super(Type.ENTITY, count);
+        super(Type.TEXTURE, count);
         this.entityType = entityType;
         this.scale = scale;
     }
 
-    public EntityIcon(FriendlyByteBuf buf) {
-        this(Holder.direct(Objects.requireNonNull(buf.readById(BuiltInRegistries.ENTITY_TYPE))), buf.readInt(), buf.readByte());
-    }
+    //TODO: Fix this
+//    public EntityIcon(FriendlyByteBuf buf) {
+//        //this(Holder.direct(Objects.requireNonNull(buf.readById(BuiltInRegistries.ENTITY_TYPE))), buf.readInt(), buf.readByte());
+//        this(Holder.direct().getDelegate(), buf.readInt(), buf.readByte());
+//    }
 
     @Override
     public Codec<? extends Icon> codec() {

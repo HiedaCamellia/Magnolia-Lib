@@ -27,10 +27,10 @@ public class BakedModelHelper {
         int[] vertexData = original.getVertices();
         int[] newVertexData = new int[vertexData.length];
         System.arraycopy(vertexData, 0, newVertexData, 0, newVertexData.length);
-        int vertexSizeInts = DefaultVertexFormat.BLOCK.getIntegerSize();
+        int vertexSizeInts = DefaultVertexFormat.BLOCK.getVertexSize();
         Optional<VertexFormatElement> positionElement = DefaultVertexFormat.BLOCK.getElements().stream()
-                .filter(e -> VertexFormatElement.Usage.UV.equals(e.getUsage())).findFirst();
-        int positionOffset = positionElement.get().getIndex();
+                .filter(e -> VertexFormatElement.Usage.UV.equals(e.usage())).findFirst();
+        int positionOffset = positionElement.get().index();
         for (int i = positionOffset; i < vertexData.length; i += vertexSizeInts) {
             newVertexData[i + 4] = Float.floatToRawIntBits(sprite.getU(unU(original.getSprite(), Float.intBitsToFloat(vertexData[i + 4]))));
             newVertexData[i + 5] = Float.floatToRawIntBits(sprite.getV(unV(original.getSprite(), Float.intBitsToFloat(vertexData[i + 5]))));
@@ -61,7 +61,7 @@ public class BakedModelHelper {
         Vec3 normal = v3.subtract(v2).cross(v1.subtract(v2)).normalize();
 
         BakedQuad[] quad = new BakedQuad[1];
-        QuadBakingVertexConsumer builder = new QuadBakingVertexConsumer(q -> quad[0] = q);
+        QuadBakingVertexConsumer builder = new QuadBakingVertexConsumer();
         builder.setSprite(sprite);
         builder.setDirection(Direction.getNearest(normal.x, normal.y, normal.z));
         putVertex(builder, normal, v1.x, v1.y, v1.z, 0, 0, sprite);
@@ -74,12 +74,12 @@ public class BakedModelHelper {
     private static void putVertex(VertexConsumer builder, Position normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite) {
         float iu = sprite.getU(u);
         float iv = sprite.getV(v);
-        builder.vertex(x, y, z)
-                .uv(iu, iv)
-                .uv2(0, 0)
-                .color(1.0f, 1.0f, 1.0f, 1.0f)
-                .normal((float) normal.x(), (float) normal.y(), (float) normal.z())
-                .endVertex();
+        builder.addVertex((float) x, (float) y, (float) z)
+                .setUv(iu, iv)
+                .setUv2(0, 0)
+                .setColor(1.0f, 1.0f, 1.0f, 1.0f)
+                .setNormal((float) normal.x(), (float) normal.y(), (float) normal.z());
+               // .endVertex();
     }
 
     public static Vec3 v(double x, double y, double z) {

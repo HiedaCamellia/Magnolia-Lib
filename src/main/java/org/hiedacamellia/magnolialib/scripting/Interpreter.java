@@ -52,7 +52,7 @@ public class Interpreter<O> {
     }
 
     protected void addGlobals(O data) {
-        context.addToScope(localScope, "this_id", Context.javaToJS(context, scriptID.toString(), localScope));
+        context.addToScope(localScope, "this_id", context.javaToJS(scriptID.toString(), localScope));
     }
 
     protected static void initGlobal() {

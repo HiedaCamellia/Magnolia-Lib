@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.function.Function;
 
 public abstract class Icon {
-    public static final ResourceLocation DEFAULT_LOCATION = new ResourceLocation(MagnoliaLib.MODID, "textures/gui/icons.png");
-    public static final Codec<Icon> CODEC = PenguinRegistries.Icons.ICON.byNameCodec().dispatchStable(Icon::codec, Function.identity());
+    public static final ResourceLocation DEFAULT_LOCATION = MagnoliaLib.prefix( "textures/gui/icons.png");
+    //public static final Codec<Icon> CODEC = PenguinRegistries.Icons.ICON.byNameCodec().dispatchStable(Icon::getType,Icon::codec);
 
     public abstract Codec<? extends Icon> codec();
 
@@ -44,7 +44,7 @@ public abstract class Icon {
     }
 
     public enum Type {
-        ITEM (ItemIcon::new) , TEXTURE(TextureIcon::new), ENTITY(EntityIcon::new), TAG(TagIcon::new), LIST(ListIcon::new), SPRITE(SpriteIcon::new);
+        /*ITEM (ItemIcon::new)*/  TEXTURE(TextureIcon::new) /*ENTITY(EntityIcon::new)*/, TAG(TagIcon::new), LIST(ListIcon::new), SPRITE(SpriteIcon::new);
 
         private final Function<FriendlyByteBuf, Icon> icon;
 
@@ -98,12 +98,12 @@ public abstract class Icon {
     public static Icon fromNetwork(FriendlyByteBuf pb) {
         Type type = Type.values()[pb.readByte()];
         switch (type) {
-            case ITEM:
-                return new ItemIcon(pb);
+//            case ITEM:
+//                return new ItemIcon(pb);
             case TEXTURE:
                 return new TextureIcon(pb.readBoolean() ? pb.readResourceLocation() : DEFAULT_LOCATION, pb.readInt(), pb.readInt(), pb.readInt());
-            case ENTITY:
-                return new EntityIcon(Holder.direct(BuiltInRegistries.ENTITY_TYPE.get(pb.readResourceLocation())), pb.readInt(), pb.readByte());
+//            case ENTITY:
+//                return new EntityIcon(Holder.direct(BuiltInRegistries.ENTITY_TYPE.get(pb.readResourceLocation())), pb.readInt(), pb.readByte());
             case TAG:
                 return new TagIcon(ItemTags.create(pb.readResourceLocation()), pb.readInt());
             case LIST: {

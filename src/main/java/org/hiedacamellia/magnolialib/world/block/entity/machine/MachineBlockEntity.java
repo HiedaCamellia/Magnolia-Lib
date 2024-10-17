@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import org.hiedacamellia.magnolialib.network.PenguinNetwork;
+import org.hiedacamellia.magnolialib.network.MagnoliaNetwork;
 import org.hiedacamellia.magnolialib.network.packet.SetActiveStatePacket;
 import org.hiedacamellia.magnolialib.world.block.entity.inventory.InventoryBlockEntity;
 
@@ -34,7 +34,7 @@ public abstract class MachineBlockEntity extends InventoryBlockEntity {
         assert level != null;
         started = level.getGameTime();
         if (!level.isClientSide) {
-            PenguinNetwork.sendToNearby(this, new SetActiveStatePacket(worldPosition, true));
+            MagnoliaNetwork.sendToNearby(this, new SetActiveStatePacket(worldPosition, true));
         }
     }
 
@@ -75,7 +75,7 @@ public abstract class MachineBlockEntity extends InventoryBlockEntity {
                     entity.passed = 0L;
                     entity.started = 0L;
                     entity.finishMachine();
-                    PenguinNetwork.sendToNearby(entity, new SetActiveStatePacket(pos, false));
+                    MagnoliaNetwork.sendToNearby(entity, new SetActiveStatePacket(pos, false));
                 }
             }
         }

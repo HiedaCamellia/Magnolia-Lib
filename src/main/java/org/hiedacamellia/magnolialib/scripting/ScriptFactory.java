@@ -75,21 +75,21 @@ public class ScriptFactory {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onItemExpire(ItemExpireEvent event) {
         try {
-            if (!event.isCanceled() && METHOD_TO_SCRIPTS.containsKey("onItemExpire")) {
-                double original = 0;
-                int extra = 0;
-                for (Interpreter<?> interpreter : METHOD_TO_SCRIPTS.get("onItemExpire")) {
-                    Object ret = interpreter.getResultOfFunction("onItemExpire", event.getEntity(), extra);
-                    if (ret instanceof Integer) {
-                        extra = ((Integer)ret);
-                    }
-                }
-
-                if (extra != 0) {
-                    event.setCanceled(true);
-                    event.setExtraLife(extra);
-                }
-            }
+//            if (!event.isCanceled() && METHOD_TO_SCRIPTS.containsKey("onItemExpire")) {
+//                double original = 0;
+//                int extra = 0;
+//                for (Interpreter<?> interpreter : METHOD_TO_SCRIPTS.get("onItemExpire")) {
+//                    Object ret = interpreter.getResultOfFunction("onItemExpire", event.getEntity(), extra);
+//                    if (ret instanceof Integer) {
+//                        extra = ((Integer)ret);
+//                    }
+//                }
+//
+//                if (extra != 0) {
+//                    event.setCanceled(true);
+//                    event.setExtraLife(extra);
+//                }
+//            }
         } catch (NullPointerException ignored) {}
     }
 
@@ -121,7 +121,7 @@ public class ScriptFactory {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onToolModification(BlockEvent.BlockToolModificationEvent event) {
         if (!event.isCanceled() && !event.isSimulated())
-            NeoForge.EVENT_BUS.post(new ScriptingEvents.TriggerFired("onToolModification", event.getPlayer(), event.getPos(), event.getToolAction()));
+            NeoForge.EVENT_BUS.post(new ScriptingEvents.TriggerFired("onToolModification", event.getPlayer(), event.getPos(), event.getContext()));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

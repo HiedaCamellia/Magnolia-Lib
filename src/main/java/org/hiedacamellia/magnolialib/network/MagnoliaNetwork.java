@@ -1,21 +1,9 @@
 package org.hiedacamellia.magnolialib.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.network.PacketDistributor;
-import org.hiedacamellia.magnolialib.network.packet.MagnoliaPacket;
 import org.hiedacamellia.magnolialib.util.registry.ReloadableRegistry;
-import org.hiedacamellia.magnolialib.world.team.MagnoliaTeam;
-import org.hiedacamellia.magnolialib.world.team.MagnoliaTeams;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
-
-public class PenguinNetwork {
+public class MagnoliaNetwork {
     //TODO: Network Rework
 
 //    public static void sendToClient(@Nullable ServerPlayer player,

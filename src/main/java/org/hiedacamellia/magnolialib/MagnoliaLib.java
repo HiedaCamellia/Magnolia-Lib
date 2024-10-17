@@ -6,7 +6,6 @@ import net.minecraft.DetectedVersion;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.metadata.PackMetadataGenerator;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +21,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.modscan.ModAnnotation;
-import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -33,7 +31,6 @@ import org.slf4j.Logger;
 import org.hiedacamellia.magnolialib.client.MagnoliaClientConfig;
 import org.hiedacamellia.magnolialib.data.PenguinRegistries;
 import org.hiedacamellia.magnolialib.data.generator.*;
-import org.hiedacamellia.magnolialib.network.PenguinNetwork;
 import org.hiedacamellia.magnolialib.network.packet.MagnoliaPacket;
 import org.hiedacamellia.magnolialib.util.IModPlugin;
 import org.hiedacamellia.magnolialib.util.registry.Packet;
@@ -86,7 +83,7 @@ public class MagnoliaLib {
         generator.addProvider(event.includeServer(), new PenguinItemTags(output, event.getLookupProvider(), blocktags.contentsGetter(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new PenguinBannerTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new PenguinDatabase(output));
-        generator.addProvider(event.includeServer(), new TestNotes(output));
+        generator.addProvider(event.includeServer(), new TestNotes(output,event.getLookupProvider().join()));
 
         //Client
         generator.addProvider(event.includeClient(), new PenguinSpriteSourceProvider(output, event.getLookupProvider(), event.getExistingFileHelper()));
@@ -103,23 +100,23 @@ public class MagnoliaLib {
     @SubscribeEvent
     public static void registerPackets(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar("1.0.0");
-
-        PACKETS.forEach(pair -> {
-            ResourceLocation ID = ObfuscationReflectionHelper.getPrivateValue(pair.getLeft(), null, "ID");
-            if (ID == null) throw new RuntimeException("Packet " + pair.getLeft().getName() + " has no ID");
-            FriendlyByteBuf.Reader<MagnoliaPacket> reader = (buf) -> {
-                try {
-                    return pair.getLeft().getDeclaredConstructor(FriendlyByteBuf.class).newInstance(buf);
-                } catch (Exception e) {
-                    throw new RuntimeException("Packet " + pair.getLeft().getName() + " has no constructor that takes a FriendlyByteBuf");
-                }
-            };
-
-            //PenguinLib.LOGGER.info("Registering packet " + ID);
-            if (pair.getRight() == PacketFlow.SERVERBOUND) {
-                registrar.play(ID, reader, handler -> handler.server(PenguinNetwork::handlePacket));
-            } else registrar.play(ID, reader, handler -> handler.client(PenguinNetwork::handlePacket));
-        });
+//
+//        PACKETS.forEach(pair -> {
+//            ResourceLocation ID = ObfuscationReflectionHelper.getPrivateValue(pair.getLeft(), null, "ID");
+//            if (ID == null) throw new RuntimeException("Packet " + pair.getLeft().getName() + " has no ID");
+//            FriendlyByteBuf.Reader<MagnoliaPacket> reader = (buf) -> {
+//                try {
+//                    return pair.getLeft().getDeclaredConstructor(FriendlyByteBuf.class).newInstance(buf);
+//                } catch (Exception e) {
+//                    throw new RuntimeException("Packet " + pair.getLeft().getName() + " has no constructor that takes a FriendlyByteBuf");
+//                }
+//            };
+//
+//            //PenguinLib.LOGGER.info("Registering packet " + ID);
+//            if (pair.getRight() == PacketFlow.SERVERBOUND) {
+//                registrar.play(ID, reader, handler -> handler.server(PenguinNetwork::handlePacket));
+//            } else registrar.play(ID, reader, handler -> handler.client(PenguinNetwork::handlePacket));
+//        });
 
         PACKETS = null;
     }

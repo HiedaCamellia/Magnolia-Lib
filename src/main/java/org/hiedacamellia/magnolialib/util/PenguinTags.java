@@ -30,18 +30,18 @@ public class PenguinTags {
     public static final TagKey<Item> CLOCKS = penguinItemTag("clocks");
     
     public static TagKey<Block> forgeBlockTag(String name) {
-        return BlockTags.create(new ResourceLocation("forge", name));
+        return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
     }
 
     public static TagKey<Item> forgeItemTag(String name) {
-        return ItemTags.create(new ResourceLocation("forge", name));
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
     }
 
     public static TagKey<Block> penguinBlockTag(String name) {
-        return BlockTags.create(new ResourceLocation(MagnoliaLib.MODID, name));
+        return BlockTags.create(MagnoliaLib.prefix(name));
     }
 
     public static TagKey<Item> penguinItemTag(String name) {
-        return ItemTags.create(new ResourceLocation(MagnoliaLib.MODID, name));
+        return ItemTags.create(MagnoliaLib.prefix(name));
     }
 }

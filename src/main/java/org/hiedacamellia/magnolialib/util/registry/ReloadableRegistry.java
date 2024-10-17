@@ -125,7 +125,7 @@ public class ReloadableRegistry<O extends ReloadableRegistry.PenguinRegistry<O>>
     }
 
     public record Configure (ServerConfigurationPacketListener listener) implements ICustomConfigurationTask {
-        public static final ConfigurationTask.Type TYPE = new ConfigurationTask.Type(SyncRegistryPacket.ID);
+        public static final ConfigurationTask.Type TYPE = new ConfigurationTask.Type(SyncRegistryPacket.TYPE.id());
 
         @Override
         public void run(@NotNull Consumer<CustomPacketPayload> sender) {

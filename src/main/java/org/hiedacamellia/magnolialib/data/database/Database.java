@@ -11,7 +11,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
@@ -24,8 +23,6 @@ import org.hiedacamellia.magnolialib.MagnoliaConfig;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
 import org.hiedacamellia.magnolialib.event.DatabaseLoadedEvent;
 import org.hiedacamellia.magnolialib.event.DatabasePopulateEvent;
-import org.hiedacamellia.magnolialib.network.PenguinNetwork;
-import org.hiedacamellia.magnolialib.network.packet.SyncDatabasePacket;
 
 import javax.annotation.Nonnull;
 import java.io.*;
@@ -42,12 +39,12 @@ public class Database implements ResourceManagerReloadListener {
 
     @SubscribeEvent
     public static void onDataPack(OnDatapackSyncEvent event) {
-        if (event.getPlayer() != null)
-            PenguinNetwork.sendToClient(event.getPlayer(), new SyncDatabasePacket(INSTANCE));
-        else {
-            event.getPlayerList().getPlayers().forEach(player ->
-                    PenguinNetwork.sendToClient(player, new SyncDatabasePacket(INSTANCE)));
-        }
+//        if (event.getPlayer() != null)
+//            PenguinNetwork.sendToClient(event.getPlayer(), new SyncDatabasePacket(INSTANCE));
+//        else {
+//            event.getPlayerList().getPlayers().forEach(player ->
+//                    PenguinNetwork.sendToClient(player, new SyncDatabasePacket(INSTANCE)));
+//        }
     }
 
     @SubscribeEvent
