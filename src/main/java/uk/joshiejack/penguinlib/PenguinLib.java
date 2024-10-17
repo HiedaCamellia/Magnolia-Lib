@@ -15,16 +15,16 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.util.InclusiveRange;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.moddiscovery.ModAnnotation;
+import net.neoforged.fml.loading.modscan.ModAnnotation;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 import net.neoforged.neoforgespi.language.ModFileScanData;
 import org.apache.commons.lang3.tuple.Pair;
 import org.objectweb.asm.Type;
@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Mod.EventBusSubscriber(modid = PenguinLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = PenguinLib.MODID, bus = EventBusSubscriber.Bus.MOD)
 @Mod(PenguinLib.MODID)
 public class PenguinLib {
     public static final String MODID = "penguinlib";
@@ -58,13 +58,13 @@ public class PenguinLib {
     public static final String NOTES_FOLDER = MODID + "/notes";
     private static List<IModPlugin> plugins = new ArrayList<>();
 
-    public PenguinLib(IEventBus eventBus) {
+    public PenguinLib(IEventBus eventBus, ModContainer modContainer) {
         plugins = getPlugins();
         PenguinLib.plugins.forEach(IModPlugin::construct);
         PenguinItems.register(eventBus);
         PenguinRegistries.register(eventBus);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PenguinClientConfig.create());
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PenguinConfig.create());
+        modContainer.registerConfig(ModConfig.Type.CLIENT, PenguinClientConfig.create());
+        modContainer.registerConfig(ModConfig.Type.COMMON, PenguinConfig.create());
     }
 
     @SubscribeEvent
@@ -150,13 +150,13 @@ public class PenguinLib {
                 .forEach((a -> {
                     try {
                         Class<?> clazz = Class.forName(a.clazz().getClassName());
-                        PACKETS.add(Pair.of((Class<PenguinPacket>) clazz, PacketFlow.valueOf(((ModAnnotation.EnumHolder) a.annotationData().get("value")).getValue())));
+                        PACKETS.add(Pair.of((Class<PenguinPacket>) clazz, PacketFlow.valueOf(((ModAnnotation.EnumHolder) a.annotationData().get("value")).value())));
                     } catch (ClassNotFoundException ignored) {}
                 }));
     }
 
     public static ResourceLocation prefix(String path) {
-        return new ResourceLocation(MODID, path.toLowerCase());
+        return ResourceLocation.fromNamespaceAndPath(MODID, path.toLowerCase());
     }
 
 }
