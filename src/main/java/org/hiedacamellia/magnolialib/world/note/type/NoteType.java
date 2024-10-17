@@ -1,4 +1,4 @@
-package uk.joshiejack.penguinlib.world.note.type;
+package org.hiedacamellia.magnolialib.world.note.type;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -12,6 +12,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import org.hiedacamellia.magnolialib.client.gui.PenguinFonts;
 import org.hiedacamellia.magnolialib.client.gui.book.widget.NoteWidget;
 import org.hiedacamellia.magnolialib.data.PenguinRegistries;
+import org.hiedacamellia.magnolialib.world.note.Note;
 import uk.joshiejack.penguinlib.world.note.Note;
 
 import javax.annotation.Nonnull;

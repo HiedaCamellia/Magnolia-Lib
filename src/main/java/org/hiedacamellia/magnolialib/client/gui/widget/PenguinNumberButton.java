@@ -12,7 +12,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
-import org.hiedacamellia.magnolialib.client.PenguinClientConfig;
+import org.hiedacamellia.magnolialib.client.MagnoliaClientConfig;
 
 @OnlyIn(Dist.CLIENT)
 public class PenguinNumberButton extends PenguinButton {
@@ -33,12 +33,12 @@ public class PenguinNumberButton extends PenguinButton {
     }
 
     public static Button.Builder builder(@NotNull Component component, @NotNull OnPress press) {
-        return PenguinClientConfig.fancyGUI.get() ? new Builder(component, press) :  Button.builder(component, press);
+        return MagnoliaClientConfig.fancyGUI.get() ? new Builder(component, press) :  Button.builder(component, press);
     }
 
     @Override
     protected void renderForeground(GuiGraphics graphics, Font font, int pMouseX, int pMouseY, float pPartialTick) {
-        if (PenguinClientConfig.fancyGUI.get()) {
+        if (MagnoliaClientConfig.fancyGUI.get()) {
             int x = 0;
             int offset = number < 10 ? 10 : number < 100 ? 5 : 0;
             for (char c: numberText) {

@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
-import org.hiedacamellia.magnolialib.client.PenguinTeamsClient;
+import org.hiedacamellia.magnolialib.client.MagnoliaTeamsClient;
 import org.hiedacamellia.magnolialib.util.registry.Packet;
 
 @Packet(PacketFlow.CLIENTBOUND)
@@ -29,6 +29,6 @@ public class SyncTeamDataPacket extends SyncCompoundTagPacket {
 
     @Override
     public void handle(Player player) {
-        PenguinTeamsClient.setInstance(tag);
+        MagnoliaTeamsClient.setInstance(tag);
     }
 }

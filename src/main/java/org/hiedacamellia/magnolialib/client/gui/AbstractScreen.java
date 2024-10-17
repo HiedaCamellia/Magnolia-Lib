@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import org.hiedacamellia.magnolialib.MagnoliaLib;
 
 import javax.annotation.Nonnull;
 
@@ -46,7 +47,7 @@ public abstract class AbstractScreen extends Screen {
     protected abstract void renderForeground(GuiGraphics graphics, int x, int y, float partialTicks);
 
     protected static ResourceLocation guiTexture(String modid, String name) {
-        return new ResourceLocation(modid, "textures/gui/%s.png".formatted(name));
+        return ResourceLocation.fromNamespaceAndPath(modid, "textures/gui/%s.png".formatted(name));
     }
 
     protected static Component translated(String modid, String name) {

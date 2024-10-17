@@ -30,7 +30,7 @@ import net.neoforged.neoforgespi.language.ModFileScanData;
 import org.apache.commons.lang3.tuple.Pair;
 import org.objectweb.asm.Type;
 import org.slf4j.Logger;
-import org.hiedacamellia.magnolialib.client.PenguinClientConfig;
+import org.hiedacamellia.magnolialib.client.MagnoliaClientConfig;
 import org.hiedacamellia.magnolialib.data.PenguinRegistries;
 import org.hiedacamellia.magnolialib.data.generator.*;
 import org.hiedacamellia.magnolialib.network.PenguinNetwork;
@@ -64,7 +64,7 @@ public class MagnoliaLib {
         MagnoliaLib.plugins.forEach(IModPlugin::construct);
         MagnoliaItems.register(eventBus);
         PenguinRegistries.register(eventBus);
-        modContainer.registerConfig(ModConfig.Type.CLIENT, PenguinClientConfig.create());
+        modContainer.registerConfig(ModConfig.Type.CLIENT, MagnoliaClientConfig.create());
         modContainer.registerConfig(ModConfig.Type.COMMON, MagnoliaConfig.create());
     }
 

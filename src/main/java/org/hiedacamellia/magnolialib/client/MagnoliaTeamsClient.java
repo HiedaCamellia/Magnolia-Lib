@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
-public class PenguinTeamsClient {
+public class MagnoliaTeamsClient {
     private static final Multimap<UUID, UUID> teamMembers = HashMultimap.create();
     private static MagnoliaTeam INSTANCE;
 

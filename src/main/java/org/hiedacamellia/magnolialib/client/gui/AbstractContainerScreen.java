@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import org.hiedacamellia.magnolialib.MagnoliaLib;
 
 import javax.annotation.Nonnull;
 
@@ -39,7 +40,7 @@ public abstract class AbstractContainerScreen <T extends AbstractContainerMenu> 
     }
 
     protected static ResourceLocation guiTexture(String modid, String name) {
-        return new ResourceLocation(modid, "textures/gui/%s.png".formatted(name));
+        return ResourceLocation.fromNamespaceAndPath(modid, "textures/gui/%s.png".formatted(name));
     }
 
     protected static Component translated(String modid, String name) {

@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
-import org.hiedacamellia.magnolialib.client.PenguinTeamsClient;
+import org.hiedacamellia.magnolialib.client.MagnoliaTeamsClient;
 import org.hiedacamellia.magnolialib.util.registry.Packet;
 
 import java.util.UUID;
@@ -42,6 +42,6 @@ public class ChangeTeamPacket implements PenguinPacket {
 
     @Override
     public void handle(Player clientPlayer) {
-        PenguinTeamsClient.changeTeam(player, oldTeam, newTeam);
+        MagnoliaTeamsClient.changeTeam(player, oldTeam, newTeam);
     }
 }

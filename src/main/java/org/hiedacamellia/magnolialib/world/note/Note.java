@@ -1,4 +1,4 @@
-package uk.joshiejack.penguinlib.world.note;
+package org.hiedacamellia.magnolialib.world.note;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -17,7 +17,7 @@ import org.hiedacamellia.magnolialib.util.icon.Icon;
 import org.hiedacamellia.magnolialib.util.icon.ItemIcon;
 import org.hiedacamellia.magnolialib.util.icon.SpriteIcon;
 import org.hiedacamellia.magnolialib.util.registry.ReloadableRegistry;
-import uk.joshiejack.penguinlib.world.note.type.NoteType;
+import org.hiedacamellia.magnolialib.world.note.type.NoteType;
 
 public class Note implements ReloadableRegistry.PenguinRegistry<Note> {
     public static final Codec<Note> CODEC = RecordCodecBuilder.create(

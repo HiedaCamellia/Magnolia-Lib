@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
@@ -23,7 +24,7 @@ public class ShadowRenderer extends RenderStateShard {
     private static ShaderInstance shadowShader;
 
     protected static final RenderStateShard.ShaderStateShard RENDERTYPE_SHADOW_SHADER = new RenderStateShard.ShaderStateShard(() -> shadowShader);
-    private static final ResourceLocation SHADOW_TEXTURE_LOCATION = new ResourceLocation(MagnoliaLib.MODID, "textures/misc/shadow.png");
+    private static final ResourceLocation SHADOW_TEXTURE_LOCATION = MagnoliaLib.prefix( "textures/misc/shadow.png");
     private static final RenderType SHADOW = RenderType.create("shadow", DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS,
             256, false, false,
             RenderType.CompositeState.builder()
@@ -57,7 +58,7 @@ public class ShadowRenderer extends RenderStateShard {
     @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void registerShaderEvent(RegisterShadersEvent event) throws IOException {
-        event.registerShader(new ShaderInstance(event.getResourceProvider(), new ResourceLocation(MagnoliaLib.MODID, "rendertype_shadow"), DefaultVertexFormat.POSITION_TEX),
+        event.registerShader(new ShaderInstance(event.getResourceProvider(), MagnoliaLib.prefix( "rendertype_shadow"), DefaultVertexFormat.POSITION_TEX),
                 shaderInstance -> shadowShader = shaderInstance);
     }
 
@@ -66,7 +67,7 @@ public class ShadowRenderer extends RenderStateShard {
         event.registerRenderBuffer(SHADOW); //Register my shadow buffer
     }
 
-    @EventBusSubscriber(modid = MagnoliaLib.MODID, bus = EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MagnoliaLib.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class Renderer {
         @SubscribeEvent
         public static void postRender(RenderLevelStageEvent event) { //Clean the batch render

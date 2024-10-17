@@ -12,13 +12,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.UsernameCache;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
-import org.hiedacamellia.magnolialib.client.PenguinTeamsClient;
+import org.hiedacamellia.magnolialib.client.MagnoliaTeamsClient;
 import org.hiedacamellia.magnolialib.event.TeamChangedEvent;
 import org.hiedacamellia.magnolialib.network.PenguinNetwork;
 import org.hiedacamellia.magnolialib.network.packet.ChangeTeamPacket;
@@ -130,7 +129,7 @@ public class MagnoliaTeams extends SavedData {
     }
 
     public static MagnoliaTeam getTeamForPlayer(Player player) {
-        if (player.level().isClientSide) return PenguinTeamsClient.getInstance(); //Client data
+        if (player.level().isClientSide) return MagnoliaTeamsClient.getInstance(); //Client data
         return getTeamForPlayer((ServerLevel) player.level(), player.getUUID());
     }
 

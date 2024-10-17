@@ -6,7 +6,7 @@ import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
-import org.hiedacamellia.magnolialib.client.PenguinTeamsClient;
+import org.hiedacamellia.magnolialib.client.MagnoliaTeamsClient;
 import org.hiedacamellia.magnolialib.util.registry.Packet;
 
 import java.util.Map;
@@ -45,6 +45,6 @@ public class SyncTeamMembersPacket implements PenguinPacket {
 
     @Override
     public void handleClient() {
-        PenguinTeamsClient.setMembers(memberOf);
+        MagnoliaTeamsClient.setMembers(memberOf);
     }
 }

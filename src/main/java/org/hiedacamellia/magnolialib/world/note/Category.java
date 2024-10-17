@@ -1,4 +1,4 @@
-package uk.joshiejack.penguinlib.world.note;
+package org.hiedacamellia.magnolialib.world.note;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

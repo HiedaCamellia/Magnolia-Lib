@@ -13,10 +13,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import org.hiedacamellia.magnolialib.MagnoliaLib;
-import org.hiedacamellia.magnolialib.client.PenguinClientConfig;
+import org.hiedacamellia.magnolialib.client.MagnoliaClientConfig;
 import org.hiedacamellia.magnolialib.util.PenguinTags;
 import org.hiedacamellia.magnolialib.util.helper.PlayerHelper;
 import org.hiedacamellia.magnolialib.util.helper.TimeHelper;
@@ -65,7 +65,7 @@ public class HUDRenderer {
     private static String formatTime(int time) {
         int hour = time / 1000;
         int minute = (int) ((double) (time % 1000) / 20 * 1.2);
-        if (PenguinClientConfig.clockType.get() == PenguinClientConfig.ClockType.TWENTY_FOUR_HOUR) {
+        if (MagnoliaClientConfig.clockType.get() == MagnoliaClientConfig.ClockType.TWENTY_FOUR_HOUR) {
             return (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute);
         } else {
             boolean pm = false;
@@ -96,14 +96,14 @@ public class HUDRenderer {
     }
 
     @SubscribeEvent
-    public static void registerGuiOverlay(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll(new ResourceLocation(MagnoliaLib.MODID, "hud"), (gui, graphics, partialTick, width, height) -> {
+    public static void registerGuiOverlay(RegisterGuiLayersEvent event) {
+        event.registerAboveAll(MagnoliaLib.prefix( "hud"), (layer,d) -> {
             if (RENDERERS.isEmpty()) return;
-            if (!gui.getMinecraft().options.hideGui) {
-                gui.setupOverlayRenderState(true, false);
-                graphics.pose().pushPose();
-                renderHUD(gui.getMinecraft(), graphics);
-                graphics.pose().popPose();
+            if (!Minecraft.getInstance().options.hideGui) {
+                //Minecraft.getInstance().setupOverlayRenderState(true, false);
+                layer.pose().pushPose();
+                renderHUD(Minecraft.getInstance(), layer);
+                layer.pose().popPose();
             }
         });
     }
@@ -133,8 +133,8 @@ public class HUDRenderer {
             }
 
             //Draw the time
-            if (PenguinClientConfig.displayClockInHUDs.get()) {
-                if (!PenguinClientConfig.requireClockItemForTime.get() || (PenguinClientConfig.requireClockItemForTime.get() && hasClockInInventory(Objects.requireNonNull(mc.player))))
+            if (MagnoliaClientConfig.displayClockInHUDs.get()) {
+                if (!MagnoliaClientConfig.requireClockItemForTime.get() || (MagnoliaClientConfig.requireClockItemForTime.get() && hasClockInInventory(Objects.requireNonNull(mc.player))))
                     graphics.drawString(mc.font, hud.getFooter(mc), x + hud.getClockX(), y + hud.getClockY(), 0xFFFFFFFF);
             }
             RenderSystem.disableBlend();

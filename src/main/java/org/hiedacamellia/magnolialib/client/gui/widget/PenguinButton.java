@@ -59,9 +59,9 @@ public class PenguinButton extends Button {
         }
 
         public Builder sprites(String modid, String name) {
-            sprites = new WidgetSprites(new ResourceLocation(modid, "widget/" + name),
-                    new ResourceLocation(modid, "widget/" + name + "_disabled"),
-                    new ResourceLocation(modid, "widget/" + name + "_highlighted"));
+            sprites = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(modid, "widget/" + name),
+                    ResourceLocation.fromNamespaceAndPath(modid, "widget/" + name + "_disabled"),
+                    ResourceLocation.fromNamespaceAndPath(modid, "widget/" + name + "_highlighted"));
             return this;
         }
 

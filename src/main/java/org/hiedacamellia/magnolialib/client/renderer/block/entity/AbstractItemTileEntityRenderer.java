@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -58,7 +59,7 @@ public abstract class AbstractItemTileEntityRenderer<T extends BlockEntity> impl
         matrix.pushPose();
         matrix.scale(1.5F, 1.5F, 1.5F);
         matrix.translate(0F, -0.05F, -0.175F);
-        BakedModel model2 = Minecraft.getInstance().getModelManager().getModel(ClientResources.SPEECH_BUBBLE);
+        BakedModel model2 = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.inventory(ClientResources.SPEECH_BUBBLE));
         renderer.render(getStick(), ItemDisplayContext.GUI, true, matrix, buffer, combinedLightIn, combinedOverlayIn, model2);
         matrix.popPose();
         matrix.popPose();
