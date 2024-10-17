@@ -53,7 +53,7 @@ public abstract class AbstractDatabaseProvider implements DataProvider {
     }
 
     protected void addLootTableMerge(ResourceLocation target) {
-        addEntry("merge_loot_table", "Target,Loot Table", CSVUtils.join(target, new ResourceLocation(modid, target.getPath())));
+        addEntry("merge_loot_table", "Target,Loot Table", CSVUtils.join(target, ResourceLocation.fromNamespaceAndPath(modid, target.getPath())));
     }
 
     protected void addTimeUnitForMachine(BlockEntityType<?> type, TimeUnitRegistry.Defaults duration) {
@@ -80,7 +80,7 @@ public abstract class AbstractDatabaseProvider implements DataProvider {
 
     protected CompletableFuture<?> saveCollection(CachedOutput cache, Multimap<String, String> data) {
         return CompletableFuture.allOf(data.keySet().stream().map(key -> {
-            Path path = modelPathProvider.file(new ResourceLocation(modid, key), "csv");
+            Path path = modelPathProvider.file(ResourceLocation.fromNamespaceAndPath(modid, key), "csv");
             return save(cache, headings.get(key), data.get(key), path);
         }).toArray(CompletableFuture[]::new));
     }

@@ -37,6 +37,6 @@ public class PenguinItemTags extends ItemTagsProvider {
         tag(PenguinTags.HAMMERS);
         tag(PenguinTags.SICKLES);
         tag(PenguinTags.WATERING_CANS);
-        tag(ItemTags.TOOLS).addTags(Tags.Items.SHEARS, PenguinTags.HAMMERS, PenguinTags.FISHING_RODS, PenguinTags.WATERING_CANS);
+        //tag(ItemTags.TOOLS).addTags(Tags.Items.SHEARS, PenguinTags.HAMMERS, PenguinTags.FISHING_RODS, PenguinTags.WATERING_CANS);
     }
 }

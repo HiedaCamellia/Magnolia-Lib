@@ -1,6 +1,7 @@
 package org.hiedacamellia.magnolialib.data.generator;
 
 import com.google.common.collect.Maps;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -18,10 +19,12 @@ public abstract class AbstractPenguinRegistryProvider<T extends ReloadableRegist
     private final PackOutput.PathProvider pathProvider;
     private final Map<ResourceLocation, T> entries = Maps.newHashMap();
     private final ReloadableRegistry<T> registry;
+    private final HolderLookup.Provider holderLookupProvider;
 
-    public AbstractPenguinRegistryProvider(PackOutput output, ReloadableRegistry<T> registry) {
+    public AbstractPenguinRegistryProvider(PackOutput output, ReloadableRegistry<T> registry,HolderLookup.Provider holderLookupProvider) {
         this.pathProvider = output.createPathProvider(PackOutput.Target.DATA_PACK, registry.dir());
         this.registry = registry;
+        this.holderLookupProvider = holderLookupProvider;
     }
 
     @Override
@@ -35,7 +38,7 @@ public abstract class AbstractPenguinRegistryProvider<T extends ReloadableRegist
     public @NotNull CompletableFuture<?> run(final @NotNull CachedOutput output) {
         final List<CompletableFuture<?>> list = new ArrayList<>();
         buildRegistry(entries);
-        entries.forEach((key, category) -> list.add(DataProvider.saveStable(output, registry.codec(), category, pathProvider.json(key))));
+        entries.forEach((key, category) -> list.add(DataProvider.saveStable(output, holderLookupProvider,registry.codec(), category, pathProvider.json(key))));
         return CompletableFuture.allOf(list.toArray(CompletableFuture[]::new));
     }
 

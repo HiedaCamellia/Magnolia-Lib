@@ -65,7 +65,7 @@ public class Row {
     }
 
     public ResourceLocation getScript() {
-        return new ResourceLocation(get("script").toString().replace("/", "_")); //Convert to namesake
+        return ResourceLocation.parse(get("script").toString().replace("/", "_")); //Convert to namesake
     }
 
     public <E extends Enum<E>> E getAsEnum(Class<E> clazz) {
@@ -92,11 +92,11 @@ public class Row {
     }
 
     public EntityType<?> entity(String name) {
-        return BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(get(name).toString()));
+        return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(get(name).toString()));
     }
 
     public ResourceLocation getRL(String name) {
-        return new ResourceLocation(get(name));
+        return ResourceLocation.parse(get(name));
     }
 
     public Block block() {
@@ -104,7 +104,7 @@ public class Row {
     }
 
     public Block block(String name) {
-        return BuiltInRegistries.BLOCK.get(new ResourceLocation(get(name).toString()));
+        return BuiltInRegistries.BLOCK.get(ResourceLocation.parse(get(name).toString()));
     }
 
     public Item item() {
@@ -112,7 +112,7 @@ public class Row {
     }
 
     public Item item(String name) {
-        return BuiltInRegistries.ITEM.get(new ResourceLocation(get(name).toString()));
+        return BuiltInRegistries.ITEM.get(ResourceLocation.parse(get(name).toString()));
     }
 
     public float getAsFloat(String label) {

@@ -6,11 +6,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("NullableProblems")
-public abstract class SimplePenguinBuilder<T extends Recipe<Container>> implements RecipeBuilder {
+public abstract class SimplePenguinBuilder<T extends Recipe<RecipeInput>> implements RecipeBuilder {
     private final RecipeSerializer<T> type;
     protected ResourceLocation id;
 

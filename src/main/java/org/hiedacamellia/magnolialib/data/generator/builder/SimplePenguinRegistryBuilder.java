@@ -8,11 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("NullableProblems")
-public abstract class SimplePenguinRegistryBuilder <T extends Recipe<Container>, R> extends AbstractNoAdvancementsBuilder {
+public abstract class SimplePenguinRegistryBuilder <T extends Recipe<RecipeInput>, R> extends AbstractNoAdvancementsBuilder {
     protected final Ingredient ingredient;
     protected final RecipeSerializer<T> type;
     protected final R result;
@@ -24,7 +25,7 @@ public abstract class SimplePenguinRegistryBuilder <T extends Recipe<Container>,
         this.result = result;
     }
 
-    public static class ItemOutput<T extends Recipe<Container>> extends SimplePenguinRegistryBuilder<T, ItemStack> {
+    public static class ItemOutput<T extends Recipe<RecipeInput>> extends SimplePenguinRegistryBuilder<T, ItemStack> {
         protected final IRecipeFactory<T> factory;
 
         public ItemOutput(RecipeSerializer<T> serializer, IRecipeFactory<T> factory, Ingredient ingredient, ItemStack result) {
@@ -47,7 +48,7 @@ public abstract class SimplePenguinRegistryBuilder <T extends Recipe<Container>,
         }
     }
 
-    public static class EntityOutput<T extends Recipe<Container>> extends SimplePenguinRegistryBuilder<T, EntityType<?>> {
+    public static class EntityOutput<T extends Recipe<RecipeInput>> extends SimplePenguinRegistryBuilder<T, EntityType<?>> {
         protected final IRecipeFactory<T> factory;
 
         public EntityOutput(RecipeSerializer<T> serializer, IRecipeFactory<T> factory, Ingredient ingredient, EntityType<?> result) {

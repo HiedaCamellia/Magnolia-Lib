@@ -2,7 +2,7 @@ package org.hiedacamellia.magnolialib.data.generator;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +24,7 @@ public class DatapackUtils {
 
     public record Feature(ResourceKey<PlacedFeature> feature, ResourceKey<ConfiguredFeature<?, ?>> configured) {}
 
-    public static <FC extends FeatureConfiguration, F extends net.minecraft.world.level.levelgen.feature.Feature<FC>> void registerFeatures(@Nullable BootstapContext<PlacedFeature> ftrContext, @Nullable BootstapContext<ConfiguredFeature<?, ?>> cnfContext,
+    public static <FC extends FeatureConfiguration, F extends net.minecraft.world.level.levelgen.feature.Feature<FC>> void registerFeatures(@Nullable BootstrapContext<PlacedFeature> ftrContext, @Nullable BootstrapContext<ConfiguredFeature<?, ?>> cnfContext,
                                                                                                                                             Feature key, F feature, FC configuration, PlacementModifier... modifiers) {
         if (cnfContext != null)
             net.minecraft.data.worldgen.features.FeatureUtils.register(cnfContext, key.configured(), feature, configuration);

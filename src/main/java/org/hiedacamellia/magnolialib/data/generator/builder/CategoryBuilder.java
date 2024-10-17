@@ -73,7 +73,7 @@ public class CategoryBuilder /*extends SimplePenguinBuilder<Category>*/ {
         Category category = new Category();
         if (icon != null) category.setIcon(icon);
         categories.put(resource, category);
-        this.notes.forEach(note -> notes.put(new ResourceLocation(resource.getNamespace(), note.getKey()), note.getRight().withCategory(resource).toNote()));
+        this.notes.forEach(note -> notes.put(ResourceLocation.fromNamespaceAndPath(resource.getNamespace(), note.getKey()), note.getRight().withCategory(resource).toNote()));
     }
 //
 //    @Override

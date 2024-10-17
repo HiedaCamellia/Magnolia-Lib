@@ -1,20 +1,18 @@
 package org.hiedacamellia.magnolialib.world.item.crafting;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nonnull;
 
 @SuppressWarnings("NullableProblems")
-public class AbstractSimplePenguinRecipe<RT extends Recipe<?>, RS extends RecipeSerializer<?>, O> implements Recipe<Container> {
+public class AbstractSimplePenguinRecipe<RT extends Recipe<?>, RS extends RecipeSerializer<?>, O> implements Recipe<RecipeInput> {
     public final Ingredient ingredient;
     public final O output;
     protected final DeferredHolder<RecipeType<?>, RecipeType<RT>> type;
@@ -28,12 +26,12 @@ public class AbstractSimplePenguinRecipe<RT extends Recipe<?>, RS extends Recipe
     }
 
     @Override
-    public boolean matches(Container inventory, @Nonnull Level world) {
-        return ingredient.test(inventory.getItem(0));
+    public boolean matches(RecipeInput recipeInput, Level level) {
+        return ingredient.test(recipeInput.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(@Nonnull Container inventory, RegistryAccess registry) {
+    public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -43,8 +41,16 @@ public class AbstractSimplePenguinRecipe<RT extends Recipe<?>, RS extends Recipe
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registry) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
+    }
+
+    public ItemStack getResult() {
+        return ItemStack.EMPTY;
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 
     @Override

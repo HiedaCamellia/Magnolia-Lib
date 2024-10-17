@@ -19,13 +19,13 @@ import org.hiedacamellia.magnolialib.world.note.type.NoteType;
 import java.util.Map;
 
 public class PenguinRegistries {
-    private static final ResourceLocation NONE = new ResourceLocation(MagnoliaLib.MODID, "none");
+    private static final ResourceLocation NONE = MagnoliaLib.prefix( "none");
     public static final Map<String, NoteType> NOTE_TYPES = new Object2ObjectOpenHashMap<>();
     public static final ReloadableRegistry<Category> CATEGORIES = new ReloadableRegistry<>(MagnoliaLib.MODID, "categories", Category.CODEC, new Category(), true).withPriority(EventPriority.HIGHEST);
     public static final ReloadableRegistry<Note> NOTES = new ReloadableRegistry<>(MagnoliaLib.MODID, "notes", Note.CODEC, new Note(NONE, NoteType.TEXT), true);
 
     public static class Icons {
-        public static final DeferredRegister<Codec<? extends Icon>> ICON_TYPES = DeferredRegister.create(ResourceKey.createRegistryKey(new ResourceLocation(MagnoliaLib.MODID, "icons")), MagnoliaLib.MODID);
+        public static final DeferredRegister<Codec<? extends Icon>> ICON_TYPES = DeferredRegister.create(ResourceKey.createRegistryKey(MagnoliaLib.prefix( "icons")), MagnoliaLib.MODID);
         public static final Registry<Codec<? extends Icon>> ICON = ICON_TYPES.makeRegistry(b -> b.sync(true));
         public static final Holder<Codec<? extends Icon>> SPRITE = ICON_TYPES.register("sprite", () -> SpriteIcon.CODEC);
         public static final Holder<Codec<? extends Icon>> LIST = ICON_TYPES.register("list", () -> ListIcon.CODEC);
